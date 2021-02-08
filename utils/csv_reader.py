@@ -1,13 +1,22 @@
 import csv
 res={}
-with open("sample.csv", 'r') as file:
-    csv_file = csv.DictReader(file)
-    for row in csv_file:
-        l=[]
-        print(row)
-        for i in row:
-            if i in res:
-                res[i] += row[i]+" "
+def csvread(filename):
+    with open(filename, 'r') as file:
+        csv_file = csv.reader(file)
+        f=0
+        for row in csv_file:
+            if(f == 0):
+                for i in row:
+                    res[i]=[]
+                f+=1
             else:
-                res[i] = l.append(row[i])
-print(res)
+                j = 0
+                for key, value in res.items():
+                    value.append(row[j])
+                    j+=1
+    return res
+
+res = csvread("sample.csv")
+for i in res:
+    print(i,res[i])
+
